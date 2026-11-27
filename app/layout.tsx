@@ -19,6 +19,21 @@ export const metadata: Metadata = {
   title: "Elevatr — Your digital career identity",
   description:
     "Quietly built, almost ready. A better way to work, create and grow. Elevatr is coming together.",
+  icons: {
+    icon: [
+      {
+        url: "/images/logo/favicon-light.svg",
+        media: "(prefers-color-scheme: light)",
+        type: "image/svg+xml",
+      },
+      {
+        url: "/images/logo/favicon-dark.svg",
+        media: "(prefers-color-scheme: dark)",
+        type: "image/svg+xml",
+      },
+    ],
+    shortcut: "/images/logo/favicon-light.svg",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
