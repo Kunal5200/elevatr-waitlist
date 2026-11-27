@@ -2,6 +2,7 @@
 
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
+import { shimmerPulseKeyframes } from "./animations";
 
 const SIDEBAR_ITEMS = ["76%", "64%", "70%", "52%"];
 
@@ -122,6 +123,10 @@ export default function BrowserWireframe() {
               minHeight: { xs: 110, sm: 160, md: 195 },
               borderRadius: "8px",
               bgcolor: "#EFEFEF",
+              animation: `${shimmerPulseKeyframes} 3.2s ease-in-out infinite`,
+              "@media (prefers-reduced-motion: reduce)": {
+                animation: "none",
+              },
             }}
           />
 
@@ -139,6 +144,10 @@ export default function BrowserWireframe() {
                   height: { xs: 54, sm: 76, md: 92 },
                   borderRadius: "8px",
                   bgcolor: "#EFEFEF",
+                  animation: `${shimmerPulseKeyframes} 3.2s ease-in-out ${card * 250}ms infinite`,
+                  "@media (prefers-reduced-motion: reduce)": {
+                    animation: "none",
+                  },
                 }}
               />
             ))}

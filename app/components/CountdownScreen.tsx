@@ -8,8 +8,9 @@ import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import { keyframes } from "@mui/system";
 import elevatrLogo from "@/images/logo/elevatr-logo.svg";
+import ConfettiBurst from "./ConfettiBurst";
+import { revealTextLine, staggerFadeUp } from "./animations";
 
-// Target launch date: February 2, 2027 (local midnight)
 const LAUNCH_DATE = new Date(2027, 1, 2, 0, 0, 0, 0);
 
 const digitDropIn = keyframes`
@@ -161,6 +162,9 @@ export default function CountdownScreen({
         py: { xs: 6, sm: 8 },
       }}
     >
+      {/* Celebratory Confetti */}
+      <ConfettiBurst />
+
       {/* Subtle Top Watermark */}
       <Box
         aria-hidden="true"
@@ -214,6 +218,7 @@ export default function CountdownScreen({
             border: 0,
             bgcolor: "transparent",
             cursor: onLogoClick ? "pointer" : "default",
+            ...staggerFadeUp(60),
           }}
         >
           <Image
@@ -238,9 +243,12 @@ export default function CountdownScreen({
             letterSpacing: "-0.03em",
             color: "#111111",
             mb: { xs: 4, sm: 5 },
+            overflow: "hidden",
           }}
         >
-          The countdown is on.
+          <Box component="span" sx={revealTextLine(140)}>
+            The countdown is on.
+          </Box>
         </Typography>
 
         {/* Countdown Grid */}
@@ -264,6 +272,7 @@ export default function CountdownScreen({
                   flexDirection: "column",
                   alignItems: "center",
                   minWidth: { xs: 84, sm: 120, md: 136 },
+                  ...staggerFadeUp(220 + index * 90),
                 }}
               >
                 <AnimatedUnitValue value={unit.value} />
@@ -289,6 +298,7 @@ export default function CountdownScreen({
                     borderColor: "#EAEAEA",
                     height: { xs: 48, sm: 58 },
                     alignSelf: "center",
+                    ...staggerFadeUp(260 + index * 90),
                   }}
                 />
               )}
@@ -297,31 +307,33 @@ export default function CountdownScreen({
         </Box>
 
         {/* Secondary CTA */}
-        <Button
-          variant="contained"
-          disableElevation
-          onClick={onNextClick}
-          sx={{
-            bgcolor: "#7B5CFA",
-            color: "#FFFFFF",
-            borderRadius: "9999px",
-            px: 3.25,
-            py: 1.15,
-            fontSize: "0.82rem",
-            fontWeight: 500,
-            textTransform: "none",
-            whiteSpace: "nowrap",
-            transition:
-              "background-color 180ms ease, transform 180ms ease, box-shadow 180ms ease",
-            "&:hover": {
-              bgcolor: "#6844F5",
-              transform: "translateY(-1px)",
-              boxShadow: "0 8px 22px rgba(123, 92, 250, 0.28)",
-            },
-          }}
-        >
-          What else do we have
-        </Button>
+        <Box sx={staggerFadeUp(480)}>
+          <Button
+            variant="contained"
+            disableElevation
+            onClick={onNextClick}
+            sx={{
+              bgcolor: "#7B5CFA",
+              color: "#FFFFFF",
+              borderRadius: "9999px",
+              px: 3.25,
+              py: 1.15,
+              fontSize: "0.82rem",
+              fontWeight: 500,
+              textTransform: "none",
+              whiteSpace: "nowrap",
+              transition:
+                "background-color 180ms ease, transform 180ms ease, box-shadow 180ms ease",
+              "&:hover": {
+                bgcolor: "#6844F5",
+                transform: "translateY(-1px)",
+                boxShadow: "0 8px 22px rgba(123, 92, 250, 0.28)",
+              },
+            }}
+          >
+            What else do we have
+          </Button>
+        </Box>
       </Box>
     </Box>
   );

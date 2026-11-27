@@ -2,6 +2,7 @@
 
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
+import { shimmerPulseKeyframes } from "./animations";
 
 const LIST_ROWS = [
   { top: "54%", bottom: "84%" },
@@ -81,6 +82,10 @@ export default function MobileWireframe() {
             borderRadius: "10px",
             bgcolor: "#EAEAEF",
             mb: 2.25,
+            animation: `${shimmerPulseKeyframes} 3.2s ease-in-out infinite`,
+            "@media (prefers-reduced-motion: reduce)": {
+              animation: "none",
+            },
           }}
         />
 

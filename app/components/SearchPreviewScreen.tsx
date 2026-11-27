@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import elevatrLogo from "@/images/logo/elevatr-logo.svg";
+import { revealTextLine, staggerFadeUp } from "./animations";
 
 interface SearchPreviewScreenProps {
   onLogoClick?: () => void;
@@ -53,6 +54,7 @@ export default function SearchPreviewScreen({
             border: 0,
             bgcolor: "transparent",
             cursor: onLogoClick ? "pointer" : "default",
+            ...staggerFadeUp(60),
           }}
         >
           <Image
@@ -77,9 +79,12 @@ export default function SearchPreviewScreen({
             letterSpacing: "-0.035em",
             color: "#111111",
             mb: { xs: 2, sm: 2.5 },
+            overflow: "hidden",
           }}
         >
-          Search, with room to breathe.
+          <Box component="span" sx={revealTextLine(150)}>
+            Search, with room to breathe.
+          </Box>
         </Typography>
 
         {/* Subcopy */}
@@ -93,38 +98,43 @@ export default function SearchPreviewScreen({
             mb: { xs: 4, sm: 4.5 },
           }}
         >
-          A new experience is on its way.
-          <br />
-          Thoughtfully built, ready to make a difference.
+          <Box component="span" sx={{ display: "block", ...staggerFadeUp(270) }}>
+            A new experience is on its way.
+          </Box>
+          <Box component="span" sx={{ display: "block", ...staggerFadeUp(360) }}>
+            Thoughtfully built, ready to make a difference.
+          </Box>
         </Typography>
 
         {/* CTA Pill Button */}
-        <Button
-          variant="contained"
-          disableElevation
-          onClick={onNextClick}
-          sx={{
-            bgcolor: "#7B5CFA",
-            color: "#FFFFFF",
-            borderRadius: "9999px",
-            minWidth: { xs: 230, sm: 268 },
-            px: 4,
-            py: 1.15,
-            fontSize: "0.82rem",
-            fontWeight: 500,
-            textTransform: "none",
-            whiteSpace: "nowrap",
-            transition:
-              "background-color 180ms ease, transform 180ms ease, box-shadow 180ms ease",
-            "&:hover": {
-              bgcolor: "#6844F5",
-              transform: "translateY(-1px)",
-              boxShadow: "0 8px 22px rgba(123, 92, 250, 0.28)",
-            },
-          }}
-        >
-          One more thing is there
-        </Button>
+        <Box sx={staggerFadeUp(460)}>
+          <Button
+            variant="contained"
+            disableElevation
+            onClick={onNextClick}
+            sx={{
+              bgcolor: "#7B5CFA",
+              color: "#FFFFFF",
+              borderRadius: "9999px",
+              minWidth: { xs: 230, sm: 268 },
+              px: 4,
+              py: 1.15,
+              fontSize: "0.82rem",
+              fontWeight: 500,
+              textTransform: "none",
+              whiteSpace: "nowrap",
+              transition:
+                "background-color 180ms ease, transform 180ms ease, box-shadow 180ms ease",
+              "&:hover": {
+                bgcolor: "#6844F5",
+                transform: "translateY(-1px)",
+                boxShadow: "0 8px 22px rgba(123, 92, 250, 0.28)",
+              },
+            }}
+          >
+            One more thing is there
+          </Button>
+        </Box>
       </Box>
     </Box>
   );

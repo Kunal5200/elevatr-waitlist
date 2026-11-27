@@ -6,6 +6,11 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import elevatrLogo from "@/images/logo/elevatr-logo.svg";
 import MobileWireframe from "./MobileWireframe";
+import {
+  gentleFloatKeyframes,
+  revealTextLine,
+  staggerFadeUp,
+} from "./animations";
 
 interface FinalSlideScreenProps {
   onLogoClick?: () => void;
@@ -48,6 +53,7 @@ export default function FinalSlideScreen({
             alignItems: "center",
             justifyContent: "space-between",
             gap: 2,
+            ...staggerFadeUp(60),
           }}
         >
           <Box
@@ -130,9 +136,12 @@ export default function FinalSlideScreen({
                 letterSpacing: "-0.045em",
                 color: "#111111",
                 mb: { xs: 1.5, sm: 2 },
+                overflow: "hidden",
               }}
             >
-              Coming soon.
+              <Box component="span" sx={revealTextLine(130)}>
+                Coming soon.
+              </Box>
             </Typography>
 
             <Typography
@@ -143,6 +152,7 @@ export default function FinalSlideScreen({
                 lineHeight: 1.2,
                 color: "#111111",
                 textTransform: "uppercase",
+                ...staggerFadeUp(250),
               }}
             >
               YOUR CAREER IS MORE THAN A PDF
@@ -156,6 +166,7 @@ export default function FinalSlideScreen({
                 color: "#171717",
                 mt: 0.5,
                 userSelect: "none",
+                ...staggerFadeUp(350),
               }}
             >
               less guesswork. more proof.
@@ -168,14 +179,24 @@ export default function FinalSlideScreen({
               alignSelf: { xs: "center", md: "center" },
               pr: { md: 1 },
               flexShrink: 0,
+              ...staggerFadeUp(220, 650),
             }}
           >
-            <MobileWireframe />
+            <Box
+              sx={{
+                animation: `${gentleFloatKeyframes} 6s ease-in-out 900ms infinite`,
+                "@media (prefers-reduced-motion: reduce)": {
+                  animation: "none",
+                },
+              }}
+            >
+              <MobileWireframe />
+            </Box>
           </Box>
         </Box>
 
         {/* Bottom Supporting Copy */}
-        <Box sx={{ pt: { xs: 2, md: 0 } }}>
+        <Box sx={{ pt: { xs: 2, md: 0 }, ...staggerFadeUp(450) }}>
           <Typography
             sx={{
               fontSize: { xs: "0.92rem", sm: "1rem" },

@@ -9,6 +9,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Typography from "@mui/material/Typography";
 import elevatrLogo from "@/images/logo/elevatr-logo.svg";
+import { revealTextLine, staggerFadeUp } from "./animations";
 
 interface WaitlistScreenProps {
   onLogoClick?: () => void;
@@ -139,6 +140,7 @@ export default function WaitlistScreen({
             border: 0,
             bgcolor: "transparent",
             cursor: onLogoClick ? "pointer" : "default",
+            ...staggerFadeUp(60),
           }}
         >
           <Image
@@ -163,9 +165,12 @@ export default function WaitlistScreen({
             lineHeight: 1.08,
             color: "#171717",
             mb: { xs: 2.5, sm: 3 },
+            overflow: "hidden",
           }}
         >
-          Something worth waiting for.
+          <Box component="span" sx={revealTextLine(120)}>
+            Something worth waiting for.
+          </Box>
         </Typography>
 
         {/* Founder Letter Copy */}
@@ -179,19 +184,25 @@ export default function WaitlistScreen({
             },
           }}
         >
-          <Typography component="p" sx={{ textAlign: "justify" }}>
+          <Typography
+            component="p"
+            sx={{ textAlign: "justify", ...staggerFadeUp(200) }}
+          >
             Before building Elevatr, we spent months researching, listening, and
             understanding the real challenges people face while searching for the
             right opportunities.
           </Typography>
 
-          <Typography component="p" sx={{ textAlign: "justify", mt: 0.75 }}>
+          <Typography
+            component="p"
+            sx={{ textAlign: "justify", mt: 0.75, ...staggerFadeUp(270) }}
+          >
             Every conversation, every insight, and countless hours of work went
             into making sure we&apos;re building something that truly understands your
             journey.
           </Typography>
 
-          <Typography component="p" sx={{ mt: 0.75 }}>
+          <Typography component="p" sx={{ mt: 0.75, ...staggerFadeUp(340) }}>
             This isn&apos;t just a product we&apos;ve built; it&apos;s something we&apos;ve
             put our hearts into, hoping it makes your next step a little easier.
           </Typography>
@@ -203,6 +214,7 @@ export default function WaitlistScreen({
               fontWeight: 700,
               color: "#3F3F46",
               fontSize: { xs: "0.94rem", sm: "0.98rem" },
+              ...staggerFadeUp(410),
             }}
           >
             Thank you for being part of this journey, even before it begins.
@@ -216,6 +228,7 @@ export default function WaitlistScreen({
               fontStyle: "italic",
               color: "#27272A",
               fontSize: { xs: "0.94rem", sm: "0.98rem" },
+              ...staggerFadeUp(470),
             }}
           >
             ~ Founders , Elevatr
@@ -227,7 +240,7 @@ export default function WaitlistScreen({
           component="form"
           onSubmit={handleSubmit}
           noValidate
-          sx={{ mt: { xs: 4.5, sm: 5.5 } }}
+          sx={{ mt: { xs: 4.5, sm: 5.5 }, ...staggerFadeUp(530) }}
         >
           <Box
             sx={{
