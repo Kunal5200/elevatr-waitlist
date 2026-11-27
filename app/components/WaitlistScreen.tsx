@@ -5,6 +5,7 @@ import Image from "next/image";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Typography from "@mui/material/Typography";
 import elevatrLogo from "@/images/logo/elevatr-logo.svg";
@@ -20,20 +21,52 @@ export default function WaitlistScreen({
 }: WaitlistScreenProps) {
   const [email, setEmail] = React.useState("");
   const [error, setError] = React.useState("");
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [submittedEmail, setSubmittedEmail] = React.useState<string | null>(null);
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    if (isSubmitting) return;
+
     const trimmed = email.trim();
     if (!trimmed || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
       setError("Please enter a valid email address.");
       return;
     }
+
     setError("");
-    if (onSuccess) {
-      onSuccess(trimmed);
-    } else {
-      setSubmittedEmail(trimmed);
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: trimmed }),
+      });
+
+      const payload = (await response.json().catch(() => null)) as {
+        error?: string;
+      } | null;
+
+      if (!response.ok) {
+        setError(
+          payload?.error ||
+            "Could not complete waitlist signup. Please try again."
+        );
+        return;
+      }
+
+      if (onSuccess) {
+        onSuccess(trimmed);
+      } else {
+        setSubmittedEmail(trimmed);
+      }
+    } catch {
+      setError("Network error while joining the waitlist. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -208,6 +241,7 @@ export default function WaitlistScreen({
               fullWidth
               type="email"
               placeholder="you@example.com"
+              disabled={isSubmitting}
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
@@ -247,8 +281,10 @@ export default function WaitlistScreen({
               type="submit"
               variant="contained"
               disableElevation
+              disabled={isSubmitting}
               sx={{
                 height: 44,
+                minWidth: 122,
                 bgcolor: "#7B5CFA",
                 color: "#FFFFFF",
                 borderRadius: "9999px",
@@ -265,9 +301,17 @@ export default function WaitlistScreen({
                   transform: "translateY(-1px)",
                   boxShadow: "0 8px 20px rgba(123, 92, 250, 0.25)",
                 },
+                "&.Mui-disabled": {
+                  bgcolor: "#A48EFC",
+                  color: "#FFFFFF",
+                },
               }}
             >
-              Join waitlist
+              {isSubmitting ? (
+                <CircularProgress size={18} sx={{ color: "#FFFFFF" }} />
+              ) : (
+                "Join waitlist"
+              )}
             </Button>
           </Box>
 
